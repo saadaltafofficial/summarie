@@ -133,7 +133,52 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  h1 {
+    @apply text-2xl md:text-6xl xl:text-7xl font-bold;
+  }
+
+  h2 {
+    @apply text-xl md:text-5xl xl:text-6xl font-bold;
+  }
+
+  h3 {
+    @apply text-lg md:text-3xl xl:text-4xl font-bold;
+  }
+
+  a {
+    @apply cursor-pointer;
+  }
+
+  button {
+    @apply cursor-pointer bg-black hover:bg-gray-800;
+  }
+
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-size: 200% 100%;
+      background-position: left center;
+    }
+
+    50% {
+      background-size: 200% 100%;
+      background-position: right center;
+    }
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 3s ease infinite;
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
   }
 }
