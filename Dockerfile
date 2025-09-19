@@ -27,4 +27,4 @@ COPY --from=builder /app/.next/static ./public/_next/static
 EXPOSE 80
 
 # Start server
-CMD ["node", "server.js", "-p", "80"]
+CMD ["npm", "start"]
