@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: summarie
-        image: ghcr.io/saadaltafofficial/summarie:sha-8bb32e3c7ad42cc4273c65795c10ec392cedfea0
+        image: ghcr.io/saadaltafofficial/summarie:sha-3ca08e9f661039d5d14bd14c24b66108eb44b52e
         # Image will be automatically updated by CI/CD pipeline
         imagePullPolicy: Always
         ports:
