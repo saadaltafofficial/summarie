@@ -1,30 +1,16 @@
-# === Build Stage ===
-FROM node:24-alpine AS builder
-
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-# Copy package files and install dependencies
 COPY package*.json ./
-RUN npm ci
-
-# Copy app source code
+RUN npm install
 COPY . .
-
-# Build the Next.js app
 RUN npm run build
 
-# === Runtime Stage ===
-FROM node:24-alpine
-
+FROM node:18-alpine AS runner
 WORKDIR /app
-
-# Copy standalone output from builder stage
-COPY --from=builder /app/.next/standalone ./
+ENV NODE_ENV=production
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/static ./public/_next/static
-
-# Expose port 80
-EXPOSE 80
-
-# Start server
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+EXPOSE 3000
 CMD ["npm", "start"]
