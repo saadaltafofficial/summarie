@@ -1,5 +1,5 @@
 // Import the jest-dom library for custom matchers
-require('@testing-library/jest-dom');
+import '@testing-library/jest-dom';
 
 // Mock next/router
 jest.mock('next/router', () => ({
