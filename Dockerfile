@@ -5,6 +5,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+
+# Runner
 FROM node:18-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
