@@ -1,8 +1,10 @@
 name: CI/CD Pipeline
-# at the top of your workflow
+
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
   packages: write
+
 
 on: 
     push:
@@ -164,12 +166,13 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v4
           with:
-            token: ${{ secrets.TOKEN }}
+            token: ${{ secrets.GITHUB_TOKEN }}
+            persist-credentials: true
         
         - name: Setup Git config
           run: |
-            git config user.name "GitHub Actions"
-            git config user.email "actions@github.com"
+            git config user.name "saadaltafoffcial"
+            git config user.email "saadbeenco@gmail.com"
         
         - name: Update Kubernetes deployment file
           env:
