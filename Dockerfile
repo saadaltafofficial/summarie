@@ -1,29 +1,30 @@
-FROM node:24-alpine
+# === Build Stage ===
+FROM node:24-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files and install dependencies
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies
-RUN npm ci --only=production
-
-# Copy the full app source
+# Copy app source code
 COPY . .
 
-# Build the app
+# Build the Next.js app
 RUN npm run build
 
-# Move into standalone directory
-WORKDIR /app/.next/standalone
+# === Runtime Stage ===
+FROM node:24-alpine
 
-# Copy static files (public assets, etc.)
-COPY --from=0 /app/.next/static ./public/_next/static
-COPY --from=0 /app/public ./public
+WORKDIR /app
+
+# Copy standalone output from builder stage
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/static ./public/_next/static
 
 # Expose port 80
 EXPOSE 80
 
-# Start the standalone server on port 80
+# Start server
 CMD ["node", "server.js", "-p", "80"]
